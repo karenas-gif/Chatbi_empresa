@@ -1,0 +1,242 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+
+<div class="webhook-container">
+
+    <h1>Configuración del Webhook</h1>
+
+    <p class="subtitulo">
+        Configura la conexión entre WhatsApp Business API y tu sistema
+        para recibir mensajes en tiempo real.
+    </p>
+
+    <div class="webhook-card">
+
+        <div class="left-form">
+
+            <label>URL del Webhook</label>
+            <input type="text"
+            value="https://api.sibela.com/webhook">
+
+            <label>Token de verificación</label>
+
+            <div class="password-box">
+                <input type="password"
+                value="123456789">
+                <i class="fa-regular fa-eye"></i>
+            </div>
+
+        </div>
+
+        <div class="right-status">
+
+            <h3>Estado de la conexión</h3>
+
+            <div class="estado-conectado">
+
+                <span class="punto"></span>
+                Conectado
+
+            </div>
+
+            <label>Versión API</label>
+
+            <select>
+
+                <option>v25.0</option>
+                <option>v17.0</option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+
+    <h3 class="eventos-title">
+        Eventos a suscribirse
+    </h3>
+
+
+    <div class="eventos">
+
+    <label class="evento">
+        <input type="checkbox" id="mensajes" checked hidden>
+        ✅
+        <p>Mensajes</p>
+    </label>
+
+    <label class="evento">
+        <input type="file"
+               id="imagenes"
+               accept="image/*"
+               hidden>
+
+        🖼️
+        <p>Imágenes</p>
+    </label>
+
+    <label class="evento">
+        <input type="file"
+               id="documentos"
+               accept=".pdf,.doc,.docx,.xlsx"
+               hidden>
+
+        📄
+        <p>Documentos</p>
+    </label>
+
+    <label class="evento">
+        <input type="checkbox"
+               id="ubicacion"
+               hidden>
+
+        📍
+        <p>Ubicación</p>
+    </label>
+
+    <label class="evento">
+        <input type="checkbox"
+               id="estados"
+               hidden>
+
+        🔄
+        <p>Estados</p>
+    </label>
+
+</div>
+
+    <div class="botones">
+
+        <button class="btn-secundario">
+
+            <i class="fa-solid fa-rotate"></i>
+            Probar conexión
+
+        </button>
+
+        <button class="btn-principal"
+        onclick="guardarConfiguracion()">
+
+        💾 Guardar configuración
+
+        </button>
+
+    </div>
+
+
+    <div class="info-box">
+
+        <h3>
+            <i class="fa-solid fa-circle-info"></i>
+            Información
+        </h3>
+
+        <ul>
+
+            <li>
+                El webhook recibirá eventos cuando los usuarios envíen mensajes.
+            </li>
+
+            <li>
+                Verifica que la URL sea pública.
+            </li>
+
+            <li>
+                Verifica el token configurado.
+            </li>
+
+        </ul>
+
+    </div>
+
+</div>
+
+<script>
+
+document.querySelectorAll(".evento").forEach(
+evento=>{
+
+evento.addEventListener(
+"click",
+function(){
+
+this.classList.toggle("activo")
+
+}
+)
+
+}
+)
+
+
+function guardarConfiguracion(){
+
+const config={
+
+mensajes:
+document.getElementById(
+"mensajes"
+)?.checked || false,
+
+ubicacion:
+document.getElementById(
+"ubicacion"
+)?.checked || false,
+
+estados:
+document.getElementById(
+"estados"
+)?.checked || false,
+
+imagenes:
+document.getElementById(
+"imagenes"
+)?.files[0]?.name || "Ninguna",
+
+documentos:
+document.getElementById(
+"documentos"
+)?.files[0]?.name || "Ninguno"
+
+}
+
+
+const archivo=new Blob(
+[
+JSON.stringify(
+config,
+null,
+4
+)
+],
+{
+type:"application/json"
+}
+)
+
+const enlace=
+document.createElement(
+"a"
+)
+
+enlace.href=
+URL.createObjectURL(
+archivo
+)
+
+enlace.download=
+"configuracion_webhook.json"
+
+enlace.click()
+
+alert(
+"Configuración guardada correctamente"
+)
+
+}
+
+</script>
+
+{% endblock %}

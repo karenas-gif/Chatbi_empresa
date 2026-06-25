@@ -1,0 +1,256 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+
+<div class="recepcion-container">
+
+    <!-- Encabezado -->
+
+    <div class="encabezado-parseo">
+
+        <div>
+
+            <h1>📩 Recepción de Mensajes</h1>
+
+            <p class="subtitulo">
+                Monitoreo y recepción de mensajes desde WhatsApp Business API
+            </p>
+
+        </div>
+
+        <div class="estado-proceso">
+
+            <h3>Estado del proceso</h3>
+
+            <p class="activo">
+
+                ● Activo
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- Eventos tiempo real -->
+
+    <div class="tabla-eventos">
+
+        <h2>Eventos recibidos en tiempo real</h2>
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Remitente</th>
+                    <th>Tipo mensaje</th>
+                    <th>Contenido</th>
+                    <th>Fecha/Hora</th>
+                    <th>Estado</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for mensaje in mensajes %}
+
+                <tr>
+
+                    <td>
+                        {{mensaje.contacto.telefono}}
+                    </td>
+
+                    <td>
+                        {{mensaje.tipo}}
+                    </td>
+
+                    <td>
+                        {{mensaje.mensaje}}
+                    </td>
+
+                    <td>
+                        {{mensaje.fecha|date:"d/m/Y H:i"}}
+                    </td>
+
+                    <td>
+
+                        {% if mensaje.estado == 'recibido' %}
+
+                        <span class="recibido">
+
+                            Recibido
+
+                        </span>
+
+                        {% else %}
+
+                        <span class="procesando">
+
+                            Procesando
+
+                        </span>
+
+                        {% endif %}
+
+                    </td>
+
+                </tr>
+
+                {% empty %}
+
+                <tr>
+
+                    <td colspan="5">
+
+                        No hay mensajes recibidos
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+
+    <!-- Actividad -->
+
+    <h2 class="titulo-actividad">
+
+        Actividad del Webhook
+
+    </h2>
+
+
+    <div class="indicadores">
+
+        <div class="indicador prospectos">
+
+            <h4>📨 Mensajes Hoy</h4>
+
+            <h2>{{total_hoy}}</h2>
+
+            <small>⬆ Actualizado en tiempo real</small>
+
+        </div>
+
+
+        <div class="indicador clientes">
+
+            <h4>⚙ Procesando</h4>
+
+            <h2>{{procesando}}</h2>
+
+        </div>
+
+
+        <div class="indicador solicitudes">
+
+            <h4>✅ Procesados</h4>
+
+            <h2>{{procesados}}</h2>
+
+        </div>
+
+
+        <div class="indicador tiempo">
+
+            <h4>❌ Errores</h4>
+
+            <h2>0</h2>
+
+        </div>
+
+    </div>
+
+
+    <!-- Logs -->
+
+    <div class="logs-box">
+
+        <h2>Logs recientes</h2>
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Fecha/Hora</th>
+                    <th>Estado</th>
+                    <th>Mensaje</th>
+                    <th>Detalle</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for mensaje in mensajes|slice:":5" %}
+
+                <tr>
+
+                    <td>
+
+                        {{mensaje.fecha|date:"d/m H:i"}}
+
+                    </td>
+
+                    <td>
+
+                        {{mensaje.estado}}
+
+                    </td>
+
+                    <td>
+
+                        Mensaje {{mensaje.contacto.telefono}}
+
+                    </td>
+
+                    <td>
+
+                        {% if mensaje.estado == 'recibido' %}
+
+                            Guardado correctamente
+
+                        {% else %}
+
+                            Extrayendo información
+
+                        {% endif %}
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+        <div class="ver-todos">
+
+            <a href="{% url 'logs' %}" class="btn-logs">
+            Ver todos los logs
+            </a>  
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,347 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+
+<div class="powerbi-container">
+
+<!-- Encabezado -->
+
+<div class="encabezado-parseo">
+
+<div>
+
+<h1>📊 Enriquecimiento de Datos</h1>
+
+<p class="subtitulo">
+
+Tableros de control e indicadores estratégicos para análisis empresarial.
+
+</p>
+
+</div>
+
+<div class="estado-proceso">
+
+<h3>Estado de los tableros</h3>
+
+<p class="activo">
+
+🟢 Actualizados
+
+</p>
+
+</div>
+
+</div>
+
+
+<!-- Flujo -->
+
+<div class="modelo-db">
+
+<h2>Flujo de trabajo - Power BI</h2>
+
+<div class="flujo-power">
+
+<div class="etapa">
+
+<div class="icono-etapa">
+🛢
+</div>
+
+<h3>Extracción de datos (ETL)</h3>
+
+
+</div>
+
+
+<div class="etapa">
+
+<div class="icono-etapa">
+⬜
+</div>
+
+<h3>Modelado de datos</h3>
+
+
+</div>
+
+
+<div class="etapa">
+
+<div class="icono-etapa">
+ƒx
+</div>
+
+<h3>Medidas DAX</h3>
+
+
+</div>
+
+
+<div class="etapa">
+
+<div class="icono-etapa">
+⊞
+</div>
+
+<h3>Diseño Dashboard</h3>
+
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<h2>Dashboards principales</h2>
+
+<div class="dashboards">
+
+<!-- operativo -->
+
+<div class="dashboard verde">
+
+<h3>Dashboard Operativo</h3>
+
+<div class="mini-cards">
+
+<div class="mini">
+
+<h4>Mensajes Entrantes</h4>
+
+<h2>8</h2>
+
+</div>
+
+
+<div class="mini">
+
+<h4>Tiempo Respuesta</h4>
+
+<h2>0.00</h2>
+
+</div>
+
+
+<div class="mini">
+
+<h4>Prospectos sin atender</h4>
+
+<h2>0</h2>
+
+</div>
+
+
+<div class="mini">
+
+<h4>Alertas activas</h4>
+
+<h2>4</h2>
+
+</div>
+
+</div>
+
+<p>Mensajes en tiempo real</p>
+
+<canvas id="graficoLinea"></canvas>
+
+</div>
+
+
+
+<!-- ventas -->
+
+<div class="dashboard azul">
+
+<h3>Dashboard Ventas</h3>
+
+<div class="mini-cards">
+
+<div class="mini">
+
+<h4>Tasa Conversión</h4>
+
+<h2>133.3</h2>
+
+</div>
+
+<div class="mini">
+
+<h4>Embudo</h4>
+
+<h2>⬇</h2>
+
+</div>
+
+</div>
+
+<p>Conversión por servicios</p>
+
+<canvas id="graficoBarras"></canvas>
+
+</div>
+
+
+
+<!-- satisfacción -->
+
+<div class="dashboard morado">
+
+<h3>Dashboard Satisfacción</h3>
+
+<div class="mini-cards">
+
+<div class="mini">
+    
+    <h4>NPS</h4>
+
+    <h2>15</h2>
+    
+</div>
+
+
+<div class="mini">
+
+<h4>⏱</h4>
+
+<h2>4.8</h2>
+
+</div>
+
+</div>
+
+<p>Reseñas por mes</p>
+
+<canvas id="graficoCircular"></canvas>
+
+
+<div class="reviews">
+
+<h4>Últimas reseñas</h4>
+
+        😊 ⭐⭐⭐⭐⭐ <br>
+
+        😃 ⭐⭐⭐⭐<br>
+
+        🙂 ⭐⭐
+
+</div>
+
+</div>
+
+</div>
+
+
+<h2>Indicadores clave</h2>
+
+
+<div class="indicadores">
+
+<div class="indicador prospectos">
+
+<h4>👥 Prospectos Totales</h4>
+
+<h2>100</h2>
+
+</div>
+
+
+<div class="indicador clientes">
+
+<h4>🧑 Nuevos Clientes</h4>
+
+<h2>15</h2>
+
+</div>
+
+
+<div class="indicador solicitudes">
+
+<h4>📩 Solicitudes Totales</h4>
+
+<h2>8</h2>
+
+</div>
+
+
+<div class="indicador tiempo">
+
+<h4>⭐ Reseñas promedio</h4>
+
+<h2>4.8</h2>
+
+</div>
+
+
+<div class="indicador">
+
+<h4>⏱ Tiempo respuesta promedio</h4>
+
+<h2>0.00</h2>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+new Chart(
+document.getElementById('graficoLinea'),
+{
+type:'line',
+data:{
+labels:['8','9','10','11','12'],
+datasets:[{
+data:[30,50,70,60,90]
+}]
+},
+options:{
+plugins:{
+legend:{display:false}
+}
+}
+}
+);
+
+
+new Chart(
+document.getElementById('graficoBarras'),
+{
+type:'bar',
+data:{
+labels:['Construcción','Electricidad','Plomería'],
+datasets:[{
+data:[320,180,250]
+}]
+},
+options:{
+plugins:{
+legend:{display:false}
+}
+}
+}
+);
+
+
+new Chart(
+document.getElementById('graficoCircular'),
+{
+type:'doughnut',
+data:{
+labels:['Positivo','Neutral','Negativo'],
+datasets:[{
+data:[70,20,10]
+}]
+}
+}
+);
+
+</script>
+
+{% endblock %} 

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+
+<div class="contenedor">
+
+<h1>📋 Historial completo de logs</h1>
+
+<table class="tabla-logs">
+
+<thead>
+<tr>
+<th>Fecha</th>
+<th>Estado</th>
+<th>Mensaje</th>
+<th>Teléfono</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for log in registros %}
+
+<tr>
+
+<td>
+{{log.fecha|date:"d/m H:i"}}
+</td>
+
+<td>
+{{log.estado}}
+</td>
+
+<td>
+{{log.mensaje}}
+</td>
+
+<td>
+{{log.contacto.telefono}}
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+{% endblock %}

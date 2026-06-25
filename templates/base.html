@@ -1,0 +1,108 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ChatBI</title>
+
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+
+    <!-- Iconos -->
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            <h2>
+                <i class="fa-brands fa-whatsapp"></i>
+                ChatBI
+            </h2>
+        </div>
+
+        <div class="menu-title">
+            Menú
+        </div>
+
+        <nav>
+
+            <a href="/" class="menu-item">
+                <i class="fa-solid fa-pen-ruler"></i>
+                Diseño WhatsApp API
+            </a>
+
+            <a href="/clientes/" class="menu-item">
+                <i class="fa-regular fa-message"></i>
+                Recepción de Mensajes
+            </a>
+
+            <a href="/chats/" class="menu-item">
+                <i class="fa-solid fa-code"></i>
+                Procesamiento Parseo
+            </a>
+
+            <a href="/estadisticas/" class="menu-item">
+                <i class="fa-solid fa-chart-line"></i>
+                Enriquecimiento Datos
+            </a>
+
+            <a href="/configuracion/" class="menu-item">
+                <i class="fa-solid fa-gear"></i>
+                Configuración
+            </a>
+            
+            
+
+        </nav>
+
+    </aside>
+
+
+    <!-- Contenido -->
+    <main class="main-content">
+
+        <!-- Barra superior -->
+        <header class="topbar">
+
+            <div class="page-title">
+                Integración WhatsApp Business API
+            </div>
+
+            <div class="top-icons">
+
+                <i class="fa-regular fa-bell"></i>
+
+                <i class="fa-regular fa-circle-question"></i>
+
+                <i class="fa-solid fa-user"></i>
+
+            </div>
+
+        </header>
+
+        <section class="content">
+
+            {% block contenido %}
+            {% endblock %}
+
+        </section>
+
+    </main>
+
+</div>
+
+</body>
+</html>

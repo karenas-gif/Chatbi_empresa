@@ -1,0 +1,406 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block contenido %}
+
+<div class="parseo-container">
+
+    <!-- Encabezado -->
+    <div class="encabezado-parseo">
+
+        <div class="info-encabezado">
+
+            <h1>⚙ Procesamiento Parseo</h1>
+
+            <p class="subtitulo">
+                Procesamiento y transformación de información recibida desde WhatsApp Business API.
+            </p>
+
+        </div>
+
+        <div class="estado-proceso">
+
+            <h3>Estado del proceso</h3>
+
+            <p class="activo">
+                ● Activo
+            </p>
+
+        </div>
+
+    </div>
+<div class="modelo-contenido">
+
+    <!-- Modelo ER -->
+
+    <div class="diagram-box">
+
+        <img src="{% static 'img/modelo_er.png' %}"
+             alt="Modelo Entidad Relación"
+             class="modelo-imagen">
+
+    </div>
+
+
+    <!-- Tablas -->
+
+    <div class="tablas-db">
+
+        <h3>📋 Tablas del Sistema</h3>
+
+        <ul class="lista-tablas">
+
+            <li onclick="mostrarTabla('contactos')">
+                👤 Contactos
+            </li>
+
+            <li onclick="mostrarTabla('conversaciones')">
+                💬 Conversaciones
+            </li>
+
+            <li onclick="mostrarTabla('solicitudes')">
+                📩 Solicitudes
+            </li>
+
+            <li onclick="mostrarTabla('resenas')">
+                ⭐ Reseñas
+            </li>
+
+        </ul>
+
+    </div>
+
+
+    <!-- Detalle Tabla -->
+
+    <div id="detalle-tabla" class="detalle-tabla">
+
+        <h3>📋 Información de la tabla</h3>
+
+        <p>
+            Selecciona una tabla para visualizar su estructura.
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- ======================= -->
+<!-- PROCEDIMIENTOS E ÍNDICES -->
+<!-- ======================= -->
+
+<div class="secciones-db">
+
+    <!-- Procedimientos -->
+
+    <div class="procedimientos">
+
+        <h2>Procedimientos almacenados / Vistas</h2>
+
+
+        <div class="vista-item">
+
+            <div>
+
+                <strong>🛢️ vista_prospectos_top</strong>
+
+                <p>
+                    Muestra los prospectos más recientes y activos
+                </p>
+
+            </div>
+
+            <a href="{% url 'descargar_vista' 'vista_prospectos_top' %}">
+                ⬇
+            </a>
+
+        </div>
+
+
+        <div class="vista-item">
+
+            <div>
+
+                <strong>🛢️ vista_servicios_demanda</strong>
+
+                <p>
+                    Resumen de servicios más solicitados
+                </p>
+
+            </div>
+
+            <a href="{% url 'descargar_vista' 'vista_servicios_demanda' %}">
+                ⬇
+            </a>
+
+        </div>
+
+
+        <div class="vista-item">
+
+            <div>
+
+                <strong>🛢️ vista_rendimiento_agentes</strong>
+
+                <p>
+                    Métricas de atención por agente
+                </p>
+
+            </div>
+
+            <a href="{% url 'descargar_vista' 'vista_rendimiento_agentes' %}">
+                ⬇
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- Panel Índices -->
+
+    <div class="panel-indices">
+
+        <div class="indices">
+
+            <h2>Índices principales</h2>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Tabla</th>
+                        <th>Campo</th>
+                        <th>Índice</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr onclick="mostrarIndice('Contactos','telefono','BTREE','Optimiza búsquedas de números telefónicos.')">
+                        <td>Contactos</td>
+                        <td>telefono</td>
+                        <td>BTREE</td>
+                    </tr>
+
+                    <tr onclick="mostrarIndice('Conversaciones','fecha','BTREE','Acelera consultas por fecha de mensajes.')">
+                        <td>Conversaciones</td>
+                        <td>fecha</td>
+                        <td>BTREE</td>
+                    </tr>
+
+                    <tr onclick="mostrarIndice('Solicitudes','estado','BTREE','Permite filtrar solicitudes por estado.')">
+                        <td>Solicitudes</td>
+                        <td>estado</td>
+                        <td>BTREE</td>
+                    </tr>
+
+                    <tr onclick="mostrarIndice('Reseñas','contacto_id','BTREE','Mejora las búsquedas relacionadas con contactos.')">
+                        <td>Reseñas</td>
+                        <td>contacto_id</td>
+                        <td>BTREE</td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <div id="detalleIndice" class="detalle-indice">
+
+            <h3>📊 Información del índice</h3>
+
+            <p>
+                Selecciona un índice para visualizar detalles.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+function mostrarIndice(tabla, campo, indice, descripcion){
+
+    document.getElementById("detalleIndice").innerHTML = `
+        <h3>📊 ${tabla}</h3>
+
+        <p><strong>Campo:</strong> ${campo}</p>
+
+        <p><strong>Tipo de índice:</strong> ${indice}</p>
+
+        <p><strong>Descripción:</strong> ${descripcion}</p>
+    `;
+
+}
+
+</script>
+
+<script>
+
+function mostrarTabla(tabla){
+
+    let contenido = "";
+
+    if(tabla === "contactos"){
+
+        contenido = `
+            <h3>👤 Tabla Contactos</h3>
+
+            <table class="tabla-info">
+
+                <tr>
+                    <th>Campo</th>
+                    <th>Tipo</th>
+                </tr>
+
+                <tr>
+                    <td>id</td>
+                    <td>BIGINT</td>
+                </tr>
+
+                <tr>
+                    <td>telefono</td>
+                    <td>VARCHAR(20)</td>
+                </tr>
+
+                <tr>
+                    <td>nombre</td>
+                    <td>VARCHAR(100)</td>
+                </tr>
+
+                <tr>
+                    <td>fecha_registro</td>
+                    <td>TIMESTAMP</td>
+                </tr>
+
+            </table>
+        `;
+    }
+
+    else if(tabla === "conversaciones"){
+
+        contenido = `
+            <h3>💬 Tabla Conversaciones</h3>
+
+            <table class="tabla-info">
+
+                <tr>
+                    <th>Campo</th>
+                    <th>Tipo</th>
+                </tr>
+
+                <tr>
+                    <td>id</td>
+                    <td>BIGINT</td>
+                </tr>
+
+                <tr>
+                    <td>mensaje</td>
+                    <td>TEXT</td>
+                </tr>
+
+                <tr>
+                    <td>tipo</td>
+                    <td>VARCHAR(50)</td>
+                </tr>
+
+                <tr>
+                    <td>estado</td>
+                    <td>VARCHAR(50)</td>
+                </tr>
+
+                <tr>
+                    <td>contacto_id</td>
+                    <td>FK</td>
+                </tr>
+
+            </table>
+        `;
+    }
+
+    else if(tabla === "solicitudes"){
+
+        contenido = `
+            <h3>📩 Tabla Solicitudes</h3>
+
+            <table class="tabla-info">
+
+                <tr>
+                    <th>Campo</th>
+                    <th>Tipo</th>
+                </tr>
+
+                <tr>
+                    <td>id</td>
+                    <td>BIGINT</td>
+                </tr>
+
+                <tr>
+                    <td>servicio</td>
+                    <td>VARCHAR(100)</td>
+                </tr>
+
+                <tr>
+                    <td>estado</td>
+                    <td>VARCHAR(50)</td>
+                </tr>
+
+                <tr>
+                    <td>contacto_id</td>
+                    <td>FK</td>
+                </tr>
+
+            </table>
+        `;
+    }
+
+    else if(tabla === "resenas"){
+
+        contenido = `
+            <h3>⭐ Tabla Reseñas</h3>
+
+            <table class="tabla-info">
+
+                <tr>
+                    <th>Campo</th>
+                    <th>Tipo</th>
+                </tr>
+
+                <tr>
+                    <td>id</td>
+                    <td>BIGINT</td>
+                </tr>
+
+                <tr>
+                    <td>calificacion</td>
+                    <td>INTEGER</td>
+                </tr>
+
+                <tr>
+                    <td>comentario</td>
+                    <td>TEXT</td>
+                </tr>
+
+                <tr>
+                    <td>contacto_id</td>
+                    <td>FK</td>
+                </tr>
+
+            </table>
+        `;
+    }
+
+    document.getElementById("detalle-tabla").innerHTML = contenido;
+}
+
+</script>
+
+{% endblock %}
